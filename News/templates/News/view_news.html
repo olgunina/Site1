@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ category.title }} :: {{ block.super }}
+{% endblock %}
+{% block sidebar %}
+{% include 'inc/sidebar.html' %}
+
+
+{% endblock %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-header">
+            Категория: <a href="{{ category.item.get_absolute_url }}" class="list-group-item list-group-item-action">{{ news_item.category }}</a>
+        </div>
+        <h5 class="card-title {% cycle 'text-success' 'text-danger' 'text-primary' %}">{{ news_item.title }}</h5>
+        <div class="card-body">
+                    {% if news_item.photo %}
+                    <img src="{{ news_item.photo.url }}" class="mr-3" width="250" alt="Photo">
+                    {% else %}
+                    <h6>Фото нет</h6>
+                    {% endif %}
+        </div>
+        {% autoescape off %}
+            <p class="card-text">  {{ news_item.content|linebreaks }}  </p>
+            {% endautoescape %}
+        <div class="card-footer text-body-secondary">
+            {{ news_item.created_at|date:'Y-m-d H:i' }}
+        </div>
+    </div>
+ {% endblock %}

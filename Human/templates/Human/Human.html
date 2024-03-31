@@ -1,0 +1,48 @@
+{% extends 'base1.html' %}
+
+
+{% block title %}
+{{ title }} :: {{ block.super }}
+{% endblock %}
+{% block sidebar %}
+{% include 'inc1/sidebar1.html' %}
+
+
+{% endblock %}
+
+{% block biografia %}
+    {% for item in human %}
+    <div class="card mb-3">
+        <div class="card-header">
+            Профессия: <a href="{{ Profession.item.get_absolute_url }}" class="list-group-item list-group-item-action">{{ item.profession }}</a>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title {% cycle 'text-success' 'text-danger' 'text-primary' %}">{{ item.name_surname }}</h5>
+            <div class="media" style="display:flex">
+                <div class="media-photo">
+                    {% if item.photo %}
+                    <img src="{{ item.photo.url }}" class="mr-3" width="250" alt="Photo">
+                    {% else %}
+                    <h6>Фото нет</h6>
+                    {% endif %}
+                </div>
+            </div>
+            {% autoescape off %}
+            <p class="card-text">{{ item.biografia|truncatewords:60|linebreaks }}</p>
+            {% endautoescape %}
+            <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Читать больше</a>
+        </div>
+
+        <div class="card-footer text-body-secondary">
+            {{ item.birthdate|date:'Y-m-d' }}
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
+
+
+
+
+
+
+
